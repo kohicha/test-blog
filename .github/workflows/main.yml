@@ -23,5 +23,6 @@ jobs:
 
       - name: Merge changes
         run: |
+          ls
           git pull content main
           git push origin main
