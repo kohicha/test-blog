@@ -25,10 +25,12 @@ jobs:
 
       - name: Copy public folder to content repository
         run: |
+          ls
           cp -r public/* content-repo/
 
       - name: Copy event folder to content repository
         run: |
+          ls
           cp -r content/event/* content-repo/src/event/
 
       - name: Commit and push changes
