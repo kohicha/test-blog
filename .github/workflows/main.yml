@@ -43,3 +43,5 @@ jobs:
           git add .
           git commit -m "Deploy content from test-blog"
           git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACTIONS_DEPLOY_KEY }}
