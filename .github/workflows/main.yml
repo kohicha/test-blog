@@ -1,0 +1,36 @@
+name: Manual Trigger
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Which environment to deploy to'
+        required: true
+        default: 'production'
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout main repository
+        uses: actions/checkout@v2
+        with:
+          path: main-repo
+
+      - name: Fetch full history for main repository
+        run: |
+          cd main-repo
+          git fetch --unshallow
+
+      - name: Checkout staging repository
+        uses: actions/checkout@v2
+        with:
+          repository: kohicha/content
+          path: staging-repo
+
+      - name: Merge changes
+        run: |
+          cd main-repo
+          git pull ../staging-repo main
+          git push origin main
