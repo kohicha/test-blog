@@ -36,7 +36,7 @@ jobs:
           cp -r content/content/* test-blog/src/content/
 
       - name: Commit and push changes
-        working-directory: content-repo
+        working-directory: test-blog
         run: |
           git config --global user.name "${{secrets.USER_NAME}}"
           git config --global user.email "${{secrets.USER_EMAIL}}"
