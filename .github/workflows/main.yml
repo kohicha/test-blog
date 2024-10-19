@@ -16,7 +16,7 @@ jobs:
       - name: Checkout main repository
         uses: actions/checkout@v2
         with:
-          repository: kohicha/test-blog
+          path: main-repo
 
       - name: Checkout staging repository
         uses: actions/checkout@v2
@@ -26,6 +26,6 @@ jobs:
       - name: Merge changes
         run: |
           ls
-          cd test-blog
+          cd main-repo
           git pull ../content main
           git push origin main
