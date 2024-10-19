@@ -15,8 +15,6 @@ jobs:
     steps:
       - name: Checkout main repository
         uses: actions/checkout@v2
-        with:
-          path: main-repo
 
       - name: Checkout staging repository
         uses: actions/checkout@v2
@@ -25,7 +23,5 @@ jobs:
 
       - name: Merge changes
         run: |
-          ls
-          cd main-repo
-          git pull ../content main
+          git pull content main
           git push origin main
