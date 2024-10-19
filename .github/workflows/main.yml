@@ -18,6 +18,11 @@ jobs:
         with:
           path: main-repo
 
+      - name: Fetch full history for main repository
+        run: |
+          cd main-repo
+          git fetch --unshallow
+
       - name: Checkout staging repository
         uses: actions/checkout@v2
         with:
