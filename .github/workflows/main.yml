@@ -26,5 +26,5 @@ jobs:
       - name: Merge changes
         run: |
           cd main-repo
-          git pull ../staging-repo main
+          git pull ../content main
           git push origin main
