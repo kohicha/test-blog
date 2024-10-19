@@ -15,14 +15,17 @@ jobs:
     steps:
       - name: Checkout main repository
         uses: actions/checkout@v2
+        with:
+          path: main-repo
 
       - name: Checkout staging repository
         uses: actions/checkout@v2
         with:
           repository: kohicha/content
+          path: staging-repo
 
       - name: Merge changes
         run: |
-          ls
-          git pull content main
+          cd main-repo
+          git pull ../staging-repo main
           git push origin main
