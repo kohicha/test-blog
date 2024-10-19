@@ -17,13 +17,11 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: kohicha/test-blog
-          path: main-repo
 
       - name: Checkout staging repository
         uses: actions/checkout@v2
         with:
           repository: kohicha/content
-          path: staging-repo
 
       - name: Merge changes
         run: |
