@@ -28,7 +28,7 @@ jobs:
       - name: Copy public folder to content repository
         run: |
           ls
-          cp -r content/public/* test-blog/
+          cp -r content/public/ test-blog/
 
       - name: Copy event folder to content repository
         run: |
