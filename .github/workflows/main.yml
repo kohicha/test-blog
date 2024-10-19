@@ -9,28 +9,33 @@ on:
         default: 'production'
 
 jobs:
-  merge:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout main repository
+      - name: Checkout test-blog repository
         uses: actions/checkout@v2
-        with:
-          path: main-repo
 
-      - name: Fetch full history for main repository
-        run: |
-          cd main-repo
-          git fetch --unshallow
-
-      - name: Checkout staging repository
+      - name: Checkout content repository
         uses: actions/checkout@v2
         with:
           repository: kohicha/content
-          path: staging-repo
+          path: content-repo
+          token: ${{ secrets.ACTIONS_DEPLOY_KEY }}
 
-      - name: Merge changes
+      - name: Copy public folder to content repository
         run: |
-          cd main-repo
-          git pull ../staging-repo main
-          git push origin main
+          cp -r public/* content-repo/src/
+
+      - name: Copy event folder to content repository
+        run: |
+          cp -r content/event/* content-repo/src/event/
+
+      - name: Commit and push changes
+        working-directory: content-repo
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Deploy content from test-blog"
+          git push
