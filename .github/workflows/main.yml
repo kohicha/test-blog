@@ -25,6 +25,7 @@ jobs:
 
       - name: Merge changes
         run: |
+          ls
           cd test-blog
           git pull ../content main
           git push origin main
