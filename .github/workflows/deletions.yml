@@ -1,11 +1,14 @@
 name: Sync Content Deletions
 
+
+
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'content/**'
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Which environment to deploy to'
+        required: true
+        default: 'production'
 
 jobs:
   sync-deletions:
