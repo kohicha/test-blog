@@ -1,0 +1,48 @@
+name: Sync Content Deletions
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'content/**'
+
+jobs:
+  sync-deletions:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout kohicha/content repository
+      uses: actions/checkout@v2
+      with:
+        repository: kohicha/content
+        path: content
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Checkout kohicha/test-blog repository
+      uses: actions/checkout@v2
+      with:
+        path: test-blog
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Identify deleted files
+      id: deleted-files
+      run: |
+        cd content
+        git diff --name-only --diff-filter=D HEAD^ HEAD > ../deleted_files.txt
+
+    - name: Delete corresponding files in kohicha/test-blog
+      run: |
+        cd test-blog
+        while read file; do
+          rm -f $file
+        done < ../deleted_files.txt
+
+    - name: Commit and push deletions
+      run: |
+        cd test-blog
+        git config --global user.name 'github-actions'
+        git config --global user.email 'github-actions@github.com'
+        git add -A
+        git commit -m "Sync deletions from kohicha/content"
+        git push
